@@ -131,7 +131,10 @@ module.exports = {
 `babel`是一个代码转换器，或者说是一个“编译器”，
 他可以将一些浏览器不支持的代码，转换为浏览器能支持的代码。
 
-首先我们安装`babel`的依赖：
+为了让`webpack`能自动对代码进行一些处理，我们需要安装一些`loader`，
+这些组件会帮助我们对不同文件进行转换。
+
+首先我们安装`babel`的依赖和它的`loader`：
 
 ```Bash
 npm i babel-loader babel-core babel-preset-es2015
@@ -167,6 +170,9 @@ module.exports = {
 };
 ```
 
+上面的正则表达式`test: /\.js$/`，代表是文件名以`.js`结尾的文件，就要经过babel转换。  
+`presets: ["es2015"]`是`babel`的一个选项，告诉它我们要使用`ES2015`插件。
+
 这样我们重启`webpack-dev-server`之后，
 就可以在`app/index.js`中添加一些只有`es2015`支持的代码了。
 （经过`babel`的编译，不支持`es2015`特性的浏览器也可以运行）
@@ -201,8 +207,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 ReactDOM.render(
-  <h1>Hello, world!</h1>,
-  document.getElementById("root")
+    <h1>Hello, world!</h1>,
+    document.getElementById("root")
 );
 ```
 
@@ -230,14 +236,14 @@ ReactDOM.render(
 var path = require("path");
 
 module.exports = {
-  context: path.resolve(__dirname, "./src"),
-  entry: {
-    app: ["./home.js", "./events.js", "./vendor.js"],
-  },
-  output: {
-    path: path.resolve(__dirname, "./dist"),
-    filename: "[name].bundle.js",
-  },
+    context: path.resolve(__dirname, "./src"),
+    entry: {
+        app: ["./home.js", "./events.js", "./vendor.js"],
+    },
+    output: {
+        path: path.resolve(__dirname, "./dist"),
+        filename: "[name].bundle.js",
+    },
 };
 ```
 
@@ -351,14 +357,14 @@ import "./app.scss";
 在~上古时代~，我们的`JavaScript`入口可能只有一个，它可能是一个300KB，数千行代码的文件
 
 ```
-└── js/
-    └── application.js   // 一个300KB，数千行代码的文件
+└── app/
+    └── all_bad_things.js   // 一个300KB，数千行代码的文件
 ```
 
 有了`webpack`之后，我们的文档结构可以是：
 
 ```
-└── js/
+└── app/
     ├── components/
     │   ├── button.js
     │   ├── calendar.js
@@ -376,6 +382,6 @@ import "./app.scss";
 这样整体的项目结构更清晰，更便于修改和维护。
 
 
-文章部分内容改编自
+## 文章部分内容改编自
 
 https://blog.madewithenvy.com/getting-started-with-webpack-2-ed2b86c68783#.5csvakdmc
