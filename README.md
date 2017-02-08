@@ -157,6 +157,7 @@ module.exports = {
                 test: /\.js$/,
                 use: {
                     loader: "babel-loader",
+                    exclude: /node_modules/,
                     options: {
                         presets: ["es2015"]
                     },
@@ -283,7 +284,10 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader"],
+                use: [
+                    "style-loader",
+                    "css-loader"
+                ],
             },
             // ...
         ],
